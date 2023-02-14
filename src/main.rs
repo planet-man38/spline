@@ -10,13 +10,6 @@ struct Bezier {
 
 #[macroquad::main("spline")]
 async fn main() {
-    let mut curve = Bezier{
-        p0: Vec2{x: 100.0, y: 200.0},
-        p1: Vec2{x: 500.0, y: 100.0},
-        p2: Vec2{x: 600.0, y: 400.0},
-        p3: Vec2{x: 500.0, y: 500.0},
-    };
-
     let resolution: u32 = 50;
 
     let mut current_grab: i8 = -1;
@@ -34,8 +27,18 @@ async fn main() {
 
         clear_background(BLACK);
 
-        
-        curve_bollocks(&mut curve, &mut current_grab, &mut current_select, resolution, current_curve, 0);
+        if is_key_pressed(KeyCode::Q) {
+            curves.push(Bezier{
+                p0: Vec2{x: 100.0, y: 200.0},
+                p1: Vec2{x: 500.0, y: 100.0},
+                p2: Vec2{x: 600.0, y: 400.0},
+                p3: Vec2{x: 500.0, y: 500.0},
+            });
+        }
+
+        for i in 0..curves.len() {
+            curve_bollocks(&mut curves[i], &mut current_grab, &mut current_select, resolution, current_curve, i as i8);
+        }
 
         next_frame().await
     }

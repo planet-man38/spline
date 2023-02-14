@@ -1,4 +1,5 @@
 use macroquad::prelude::*;
+use macroquad::rand;
 
 #[derive(Clone, Copy)]
 struct Bezier {
@@ -14,7 +15,7 @@ async fn main() {
 
     let mut current_grab: i8 = -1;
     let mut current_select: i8 = -1;
-    let mut current_curve: i8 = 1;
+    let mut current_curve: i8 = 0;
     let mut curves:Vec<Bezier> = vec![];
 
     loop { //MAIN LOOP
@@ -29,11 +30,12 @@ async fn main() {
 
         if is_key_pressed(KeyCode::Q) {
             curves.push(Bezier{
-                p0: Vec2{x: 100.0, y: 200.0},
-                p1: Vec2{x: 500.0, y: 100.0},
-                p2: Vec2{x: 600.0, y: 400.0},
-                p3: Vec2{x: 500.0, y: 500.0},
+                p0: Vec2{x: rand::gen_range(10.0, 800.0), y: rand::gen_range(10.0, 500.0)},
+                p1: Vec2{x: rand::gen_range(10.0, 800.0), y: rand::gen_range(10.0, 500.0)},
+                p2: Vec2{x: rand::gen_range(10.0, 800.0), y: rand::gen_range(10.0, 500.0)},
+                p3: Vec2{x: rand::gen_range(10.0, 800.0), y: rand::gen_range(10.0, 500.0)}
             });
+            current_curve = curves.len() as i8 - 1;
         }
 
         for i in 0..curves.len() {
